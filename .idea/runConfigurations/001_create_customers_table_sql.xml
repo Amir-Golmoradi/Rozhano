@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="001_create_customers_table.sql" type="DatabaseScript" editBeforeRun="true" singleton="false" nameIsGenerated="true">
+    <script-file value="$PROJECT_DIR$/customer-service/src/main/resources/db.migration/001_create_customers_table.sql" />
+    <script-mode>FILE</script-mode>
+    <data-source id="6b752dc9-6e9c-44ae-b9ff-265db19781fe" />
+    <method v="2" />
+  </configuration>
+</component>

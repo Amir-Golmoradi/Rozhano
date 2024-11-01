@@ -1,0 +1,2 @@
+# Why should we use `FactoryMethod` for Entities ?
+Using the Factory Method pattern for your Entity is a solid choice. It allows you to **encapsulate** the creation logic and ensures consistency across your application. This way, if you ever need to change the instantiation process, you only have to do it in one place. Plus, it aligns well with the principles of object-oriented design(OOD), making your codebase more maintainable and scalable. Smart move for a complex, multi-service platform like yours!
