@@ -1,45 +1,29 @@
 package wisepup.customer_service.domain.aggregates;
 
 import jakarta.persistence.*;
-import lombok.*;
-import org.springframework.lang.NonNull;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 import wisepup.customer_service.domain.valueObjects.Address;
+import wisepup.customer_service.domain.valueObjects.CustomerId;
 import wisepup.customer_service.domain.valueObjects.FullName;
 import wisepup.customer_service.domain.valueObjects.PhoneNumber;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
+import java.time.Instant;
 
-@Entity
-@Table(
-        name = "customers",
-        uniqueConstraints = {
-                @UniqueConstraint(
-                        name = "unique_phone_number",
-                        columnNames = "phone_number"
-                )
-        }
-)
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Customer {
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private Integer id;
+    @EmbeddedId
+    private final CustomerId id;
 
+    @NotNull
     @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "firstName", column = @Column(name = "first_name", nullable = false)),
-            @AttributeOverride(name = "lastName", column = @Column(name = "last_name", nullable = false)),
-    })
-    @NonNull
     private FullName fullName;
 
+    @NotNull
     @Embedded
-    @NonNull
     private PhoneNumber phoneNumber;
-
 
     @Embedded
     @AttributeOverrides({
@@ -48,17 +32,27 @@ public class Customer {
             @AttributeOverride(name = "alley", column = @Column(name = "alley", nullable = false)),
             @AttributeOverride(name = "zipCode", column = @Column(name = "zip_code", nullable = false))
     })
-    @NonNull
+    @NotNull
     private Address address;
 
+    private Instant createdAt;
+    private Instant updatedAt;
 
-    // Business logic methods
-
-    public void updateAddress(Address newAddress) {
-        if (newAddress == null)
-            throw new IllegalArgumentException("Address cannot be Empty !");
-        this.address = newAddress;
+    public Customer(FullName fullName, PhoneNumber phoneNumber, Address address) {
+        this.id = new CustomerId();
+        this.fullName = fullName;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
     }
 
-
+    public void updatePersonalInfo(FullName fullName) {
+        this.fullName = fullName;
+    }
+    public void updateDeliveryAddress(Address address) {
+        this.address = address;
+    }
 }
+
+

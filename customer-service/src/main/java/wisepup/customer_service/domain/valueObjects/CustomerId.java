@@ -1,10 +1,16 @@
 package wisepup.customer_service.domain.valueObjects;
 
-public record CustomerId(String value) {
-    public static CustomerId of(String value) {
-        if (value == null || value.trim().isEmpty()) {
-            throw new IllegalArgumentException("Customer Id cannot be null or empty");
-        }
-        return new CustomerId(value);
+import org.springframework.util.Assert;
+
+import java.util.UUID;
+
+public record CustomerId(UUID id) {
+
+    public CustomerId {
+        Assert.notNull(id, "id must not be null");
+    }
+
+    public CustomerId() {
+        this(UUID.randomUUID());
     }
 }

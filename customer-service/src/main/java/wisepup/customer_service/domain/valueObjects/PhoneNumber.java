@@ -1,37 +1,34 @@
 package wisepup.customer_service.domain.valueObjects;
 
-import jakarta.persistence.Embeddable;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.ToString;
+import lombok.Value;
+import org.springframework.util.Assert;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
-@Embeddable
-@EqualsAndHashCode
+@Value
 @Getter
-@ToString
 public class PhoneNumber {
     private static final String PHONE_NUMBER_PATTERN = "^\\+98\\d{10}$";
-    private final String phoneNumber;
 
-    // Default constructor for JPA
-    protected PhoneNumber() {
-        this.phoneNumber = null;
-    }
+    String phoneNumber;
 
-    public PhoneNumber(String phoneNumber) {
+
+    // Factory method
+    public static PhoneNumber of(String phoneNumber) {
+        Assert.hasText(phoneNumber, "Phone number cannot be empty");
         validatePhoneNumber(phoneNumber);
-        this.phoneNumber = phoneNumber;
+        return new PhoneNumber(phoneNumber);
     }
 
-    private void validatePhoneNumber(String phoneNumber) {
+    private static void validatePhoneNumber(String phoneNumber) {
         if (phoneNumber == null || !Pattern.matches(PHONE_NUMBER_PATTERN, phoneNumber))
-            throw new IllegalArgumentException("Invalid phone number");
+            Objects.requireNonNull(phoneNumber, "Phone number cannot be null");
         if (!phoneNumber.startsWith("+98"))
             phoneNumber = "+98" + phoneNumber;
         if (!Pattern.matches(PHONE_NUMBER_PATTERN, phoneNumber)) {
-            throw new IllegalArgumentException("Invalid phone number format. Please provide a phone number without 0.");
+            throw new IllegalArgumentException("Invalid phone number format. Please provide a phone number without ZERO.");
         }
     }
 

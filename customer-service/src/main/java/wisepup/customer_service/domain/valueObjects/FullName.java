@@ -1,31 +1,29 @@
 package wisepup.customer_service.domain.valueObjects;
 
-import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Objects;
+
 @Getter
-@Setter
-@ToString
-@Embeddable
 @EqualsAndHashCode
+@ToString
 public class FullName {
     private final String firstName;
     private final String lastName;
 
-    protected FullName() {
-        this.firstName = null;
-        this.lastName = null;
-    }
-
-    public FullName(String firstName, String lastName) {
-        if ((firstName == null || firstName.isEmpty()) && (lastName == null || lastName.isEmpty())) {
-            throw new IllegalArgumentException("Customer's name must have at least one name");
-        }
+    private FullName(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
+    public static FullName of(String firstName, String lastName) {
+        return new FullName(
+                Objects.requireNonNull(firstName, "First name cannot be empty"),
+                Objects.requireNonNull(lastName, "Last name cannot be empty")
+        );
+    }
+
 }
+
