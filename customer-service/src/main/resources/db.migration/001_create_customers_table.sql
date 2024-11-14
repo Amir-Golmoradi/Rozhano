@@ -1,11 +1,13 @@
 CREATE TABLE customers
 (
-    id           SERIAL PRIMARY KEY,
-    full_name    VARCHAR(50)  NOT NULL,
-    phone_number VARCHAR(20)  NOT NULL,
-    city         VARCHAR(255) NOT NULL,
-    street       VARCHAR(255) NOT NULL,
-    alley        VARCHAR(255) NOT NULL,
-    zip_code     VARCHAR(15)  NOT NULL,
-    CONSTRAINT unique_phone_number UNIQUE (phone_number)
+    id           UUID                     NOT NULL,
+    first_name   VARCHAR(70)              NOT NULL,
+    last_name    VARCHAR(70)              NOT NULL,
+    phone_number VARCHAR(15)              NOT NULL,
+    address      VARCHAR(120)             NOT NULL,
+    created_at   TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at   TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deleted      BOOLEAN                  NOT NULL,
+    deleted_at   TIMESTAMP WITH TIME ZONE          DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT pk_customers PRIMARY KEY (id)
 );
