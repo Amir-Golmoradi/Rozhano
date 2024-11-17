@@ -3,11 +3,10 @@ package wisepup.customer_service.presentation.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import wisepup.customer_service.application.dto.CustomerDTO;
-import wisepup.customer_service.application.dto.mapper.CustomerDTOMapper;
 import wisepup.customer_service.application.port.outgoing.CustomerCreatedRequest;
-import wisepup.customer_service.application.service.outgoing.CustomerManagementService;
+import wisepup.customer_service.application.service.incoming.CustomerService;
+import wisepup.customer_service.domain.model.value_object.PhoneNumber;
 import wisepup.customer_service.infrastructure.exception.CustomerNotFoundException;
-import wisepup.customer_service.infrastructure.mapper.CustomerMapper;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,9 +16,7 @@ import java.util.UUID;
 @RequestMapping("api/v1/customers")
 @RequiredArgsConstructor
 public class CustomerController {
-    private final CustomerManagementService service;
-    private final CustomerMapper mapper;
-    private final CustomerDTOMapper dtoMapper;
+    private final CustomerService service;
 
     @GetMapping
     public List<CustomerDTO> getAllCustomers() {
@@ -31,6 +28,13 @@ public class CustomerController {
         return service.findCustomerById(id)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer with Id" + id + " not found"));
     }
+
+    @GetMapping("/phoneNumber/{phoneNumber}")
+    public CustomerDTO getCustomerByPhoneNumber(@PathVariable("phoneNumber") String phoneNumber) {
+        return service.findCustomerByPhoneNumber(new PhoneNumber(phoneNumber))
+                .orElseThrow(() -> new CustomerNotFoundException("Customer with phoneNumber" + phoneNumber + " not found"));
+    }
+
 
     @PostMapping
     public void createCustomer(@RequestBody CustomerCreatedRequest request) {
