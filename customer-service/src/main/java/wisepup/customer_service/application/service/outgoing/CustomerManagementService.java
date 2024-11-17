@@ -6,6 +6,7 @@ import wisepup.customer_service.application.dto.CustomerDTO;
 import wisepup.customer_service.application.dto.mapper.CustomerDTOMapper;
 import wisepup.customer_service.application.port.outgoing.CustomerCreatedRequest;
 import wisepup.customer_service.application.service.incoming.CustomerService;
+import wisepup.customer_service.common.exceptions.CustomerDuplicationException;
 import wisepup.customer_service.domain.aggregate.Customer;
 import wisepup.customer_service.domain.model.value_object.Address;
 import wisepup.customer_service.domain.model.value_object.FullName;
@@ -50,16 +51,22 @@ public class CustomerManagementService implements CustomerService {
 
     @Override
     public void insertCustomer(CustomerCreatedRequest request) {
+        var fullName = new FullName(request.firstName(), request.lastName());
+        var phoneNumber = new PhoneNumber(request.phoneNumber());
+        var address = Address.of(
+                request.address().getCity(),
+                request.address().getStreet(),
+                request.address().getAlley(),
+                request.address().getZipCode()
+        );
 
+        if (customerDAO.existsCustomerByPhoneNumber(phoneNumber)) {
+            throw new CustomerDuplicationException("Customer with PhoneNumber " + phoneNumber.getPhoneNumber() + " already exists");
+        }
         var newCustomer = new Customer(
-                new FullName(request.firstName(), request.lastName()),
-                new PhoneNumber(request.phoneNumber()),
-                Address.of(
-                        request.address().getCity(),
-                        request.address().getStreet(),
-                        request.address().getAlley(),
-                        request.address().getZipCode()
-                )
+                fullName,
+                phoneNumber,
+                address
         );
         customerDAO.saveCustomer(newCustomer);
     }

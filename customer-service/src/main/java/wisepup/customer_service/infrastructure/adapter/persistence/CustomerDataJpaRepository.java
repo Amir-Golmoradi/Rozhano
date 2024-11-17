@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import wisepup.customer_service.domain.aggregate.Customer;
+import wisepup.customer_service.domain.model.value_object.PhoneNumber;
 import wisepup.customer_service.infrastructure.entity.CustomerData;
 
 import java.util.Optional;

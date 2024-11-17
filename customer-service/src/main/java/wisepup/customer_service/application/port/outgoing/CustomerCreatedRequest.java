@@ -7,6 +7,4 @@ public record CustomerCreatedRequest(
         String lastName,
         String phoneNumber,
         Address address
-) {
-
-}
+) {}

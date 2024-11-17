@@ -17,8 +17,8 @@ public class Address {
         this.zipCode = zipCode;
     }
 
-    public static Address of(String street, String city, String state, String zipCode) {
-        return new Address(street, city, state, zipCode);
+    public static Address of(String city, String street, String alley, String zipCode) {
+        return new Address(city, street, alley, zipCode);
 
     }
 
