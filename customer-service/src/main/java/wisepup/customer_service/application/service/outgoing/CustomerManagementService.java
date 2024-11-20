@@ -25,8 +25,8 @@ public class CustomerManagementService implements CustomerService {
     private final CustomerDAO customerDAO;
 
     @Override
-    public List<CustomerDTO> findAllCustomers() {
-        return customerDAO.findAllCustomers().stream().map(mapper).toList();
+    public List<CustomerDTO> getAllCustomers() {
+        return customerDAO.getAllCustomers().stream().map(mapper).toList();
     }
 
     @Override

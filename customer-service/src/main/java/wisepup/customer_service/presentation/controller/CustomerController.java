@@ -20,7 +20,7 @@ public class CustomerController {
 
     @GetMapping
     public List<CustomerDTO> getAllCustomers() {
-        return service.findAllCustomers();
+        return service.getAllCustomers();
     }
 
     @GetMapping("/{id}")

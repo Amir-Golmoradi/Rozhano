@@ -25,7 +25,7 @@ public class CustomerDataAccessService implements CustomerDAO {
 
 
     @Override
-    public List<Customer> findAllCustomers() {
+    public List<Customer> getAllCustomers() {
         return jpaRepository.findAll().stream().map(mapper).toList();
     }
 

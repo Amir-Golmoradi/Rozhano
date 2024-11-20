@@ -41,13 +41,13 @@ class CustomerManagementServiceTest {
     }
 
     @Test
-    void findAllCustomers_whenCalled_returnsAllMappedCustomers() {
+    void getAllCustomers_whenCalled_returnsAllMappedCustomers() {
         // GIVEN
         FullName fullName1 = new FullName("John", "Smith");
         FullName fullName2 = new FullName("John", "Doe");
 
-        PhoneNumber phoneNumber1 = new PhoneNumber("123456789");
-        PhoneNumber phoneNumber2 = new PhoneNumber("987654321");
+        PhoneNumber phoneNumber1 = new PhoneNumber("1234567890");
+        PhoneNumber phoneNumber2 = new PhoneNumber("9876543210");
 
         Address address1 = Address.of("Tehran", "Vanak", "Vanak Alley", "623574986");
         Address address2 = Address.of("Tehran", "ValiAsr", "ValiAsr Alley", "356274986");
@@ -65,19 +65,19 @@ class CustomerManagementServiceTest {
         // WHEN
 
         // Mock customerDAO to return customers
-        when(customerDAO.findAllCustomers()).thenReturn(customers);
+        when(customerDAO.getAllCustomers()).thenReturn(customers);
 
         // Mock the mapper to convert Customer to CustomerDTO
         when(mapper.apply(customers.get(0))).thenReturn(customerDTOs.get(0));
         when(mapper.apply(customers.get(1))).thenReturn(customerDTOs.get(1));
 
         // THEN
-        List<CustomerDTO> result = underTest.findAllCustomers();
+        List<CustomerDTO> result = underTest.getAllCustomers();
 
         assertEquals(customerDTOs.get(0), result.get(0));
         assertEquals(customerDTOs.get(1), result.get(1));
 
-        verify(customerDAO).findAllCustomers();
+        verify(customerDAO).getAllCustomers();
     }
 
     @Test

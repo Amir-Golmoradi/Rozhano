@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface CustomerDAO {
-    List<Customer> findAllCustomers();
+    List<Customer> getAllCustomers();
 
     Optional<Customer> findCustomerById(UUID customerId);
 
