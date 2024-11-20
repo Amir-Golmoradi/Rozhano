@@ -76,11 +76,36 @@ We welcome contributions from the open-source community! Please follow the steps
 
 ### Code Quality and Style
 
-- Adhere to consistent code formatting rules.
-- Write clear and descriptive commit messages.
-- Employ proper naming conventions for variables, methods, and classes.
+- Follow consistent code formatting rules.
+- Write clear, descriptive commit messages.
+- Use proper naming conventions for variables, methods, and classes.
 
 **Bad Example**:
-
 ```java
-public void a() { /* Code here */ }
+  public void a() { /* Code here */ }
+```
+
+**Good Example**:
+```java
+  public void ProcessOrder() { /* Code here */ }
+```
+
+### Issue Reporting and Resolution
+
+- Always open an issue for bugs or new feature requests before starting any work.
+- Provide a detailed description of the issue or feature request, including steps to reproduce if it's a bug.
+
+**Bad Example**:
+"App crashes when I open the orders page."
+
+**Good Example**:
+"App crashes on the Orders page after clicking on a specific order ID. Steps to reproduce:
+1. Open the app.
+2. Navigate to the Orders tab.
+3. Click on the order ID '12345'."
+
+### Pull Requests
+
+- Ensure your branch is up to date with the latest `main` branch.
+- Make sure your code passes all the tests before creating a pull request.
+- Include a description of what your pull request does and why.
