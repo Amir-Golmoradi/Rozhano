@@ -1,4 +1,6 @@
-FROM ubuntu:latest
-LABEL authors="wisepup"
+FROM openjdk:17
+VOLUME /tmp
+EXPOSE 8080
+COPY target/customerEntity-service-0.0.1-SNAPSHOT.jar customer.jar
 
-ENTRYPOINT ["top", "-b"]
+ENTRYPOINT ["java","-jar","/customerEntity.jar"]

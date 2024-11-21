@@ -11,22 +11,18 @@ services:
       - auth-db
 
   customer-service:
-    build: ./customer-service
-    ports:
-      - "8082:8082"
-    environment:
-      - DATABASE_URL=jdbc:postgresql://customer-db:5432/customer-db
+    build:
+      context: ./customer-service
+    container_name: customer-psql-app
     depends_on:
       - customer-db
-
-  order-service:
-    build: ./order-service
     ports:
-      - "8083:8083"
+      - "5332:5432"
     environment:
-      - DATABASE_URL=jdbc:postgresql://order-db:5432/orderdb
-    depends_on:
-      - order-db
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://customer-db:5432/customer-psql
+      - SPRING_DATASOURCE_USERNAME=amirgolmoradi
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
 
   auth-db:
     image: postgres:latest
@@ -34,17 +30,20 @@ services:
       POSTGRES_DB: authdb
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
+    ports:
+      - '5432:5432'
 
   customer-db:
+    container_name: customer-psql-db
     image: postgres:latest
     environment:
-      POSTGRES_DB: customer-db
+      POSTGRES_DB: customer-psql
       POSTGRES_USER: amirgolmoradi
       POSTGRES_PASSWORD: password
+    ports:
+      - '5432:5432'
 
-  order-db:
-    image: postgres:latest
-    environment:
-      POSTGRES_DB: orderdb
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+# Volumes for persistent data storage
+volumes:
+  mongo-data:
+  postgres-data:
